@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercício</title>
+  </head>
+
+  <body>
+    <h1>Alterar Cor de Fundo</h1>
+
+    <form onsubmit="addColor()">
+      <select id="lista-cores">
+        <option value="blue">Azul</option>
+      </select>
+
+      <br /><br />
+
+      <label>Nome da Cor</label><br />
+      <input id="cor" type="text" /><br />
+      <br />
+
+      <label>Código da Cor (Nome, Hexadecimal ou RGB)</label><br />
+      <input id="codigo" type="text" /><br />
+
+      <p id="error"></p>
+
+      <br />
+
+      <button id="btnInserir">Inserir Nova Cor</button><br /><br />
+
+      <button id="BtnAlterar">Alterar Cor</button><br />
+    </form>
+    <br />
+    <a
+      target="_blank"
+      href="https://celke.com.br/artigo/tabela-de-cores-html-nome-hexadecimal-rgb"
+      >Tabela de Cores HTML</a
+    >
+
+    <script>
+      function addColor() {
+        event.preventDefault();
+
+        const btnInserir = document.getElementById("btnInserir");
+        const btnAlterar = document.getElementById("BtnAlterar");
+
+        btnInserir.addEventListener("click", () => {
+          const cor = document.getElementById("cor");
+          const codigo = document.getElementById("codigo");
+
+          if (cor.value === "" || codigo.value === "") {
+            document.getElementById("error").innerText =
+              "Você deve inserir o nome e o código da cor!";
+          } else {
+            const listaCores = document.getElementById("lista-cores");
+            const option = document.createElement("option");
+
+            option.text = cor.value;
+            option.value = codigo.value;
+            listaCores.add(option);
+
+            //limpando input
+            cor.value = "";
+            codigo.value = "";
+          }
+        });
+
+        btnAlterar.addEventListener("click", () => {
+          const listaCores = document.getElementById("lista-cores").value;
+          console.log(listaCores);
+          document.body.style.background = listaCores;
+        });
+      }
+      //
+    </script>
+  </body>
+</html>

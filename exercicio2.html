@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercício</title>
+  </head>
+
+  <body>
+    <h1>Adicionar Parágrafos</h1>
+
+    <form onsubmit="paragrafo()">
+      <label>Digite o Texto do Parágrafo</label><br />
+      <input id="texto-paragrafo" type="text" /><br />
+
+      <div id="paragrafo"></div>
+      <br />
+
+      <p id="error-inserir"></p>
+      <button id="btnInserir">Inserir Parágrafo</button><br /><br />
+
+      <label>Digite o nº do parágrafo para remover</label><br />
+      <button id="BtnRemover">Remover Parágrafo</button>
+      <input id="numero-paragrafo" type="number" size="5" />
+      <p id="error-remover"></p>
+
+      <br />
+    </form>
+
+    <div id="caixa"></div>
+
+    <script>
+      function paragrafo() {
+        event.preventDefault();
+
+        const btnInserir = document.getElementById("btnInserir");
+        const btnRemover = document.getElementById("BtnRemover");
+
+        let count = 0;
+        btnInserir.addEventListener("click", () => {
+          event.preventDefault();
+
+          count++;
+          const textoParagrafo = document.getElementById("texto-paragrafo");
+
+          if (textoParagrafo.value === "") {
+            document.getElementById("error-inserir").innerText =
+              "Você deve inserir um paragrafo!";
+          } else {
+            const p = document.createElement("p");
+            p.setAttribute("id", count);
+
+            const novoParagrafo = document.createTextNode(
+              `${count}. ${textoParagrafo.value}`
+            );
+            p.appendChild(novoParagrafo);
+
+            document.getElementById("paragrafo").appendChild(p);
+
+            textoParagrafo.value = "";
+          }
+        });
+
+        btnRemover.addEventListener("click", () => {
+          event.preventDefault();
+
+          const numeroParagrafo = document.getElementById("numero-paragrafo");
+
+          if (numeroParagrafo.value === "") {
+            document.getElementById("error-remover").innerText =
+              "Você deve inserir o número do paragrafo que deseja remover!";
+          } else {
+            document.getElementById(numeroParagrafo.value).remove();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
