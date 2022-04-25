@@ -1,133 +1,146 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bungee+Hairline"
+    />
+    <title>Exercício</title>
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Hairline">
-  <title>Exercício</title>
+    <style>
+      #container {
+        width: 400px;
+        height: 400px;
+        position: relative;
+        background: yellow;
+        z-index: -2;
+      }
 
-  <style>
-    #container {
-      width: 400px;
-      height: 400px;
-      position: relative;
-      background: yellow;
-      z-index: -2;
-    }
+      .bola,
+      #animate {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        background: red;
+        border-radius: 25px;
+      }
 
-    .bola,
-    #animate {
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      background: red;
-      border-radius: 25px;
-    }
+      .bola {
+        background: green;
+        z-index: -1;
+      }
 
-    .bola {
-      background: green;
-      z-index: -1;
-    }
+      #caixa-info {
+        width: 400px;
+        text-align: center;
+        line-height: 30px;
+        font-family: "Bungee Hairline";
+        font-weight: bold;
+      }
 
-    #caixa-info {
-      width: 400px;
-      text-align: center;
-      line-height: 30px;
-      font-family: 'Bungee Hairline';
-      font-weight: bold;
-    }
+      #caixa-info > div {
+        font-size: 18px;
+        width: 50%;
+        position: relative;
+        background: coral;
+        float: left;
+      }
+    </style>
+  </head>
 
-    #caixa-info>div {
-      font-size: 18px;
-      width: 50%;
-      position: relative;
-      background: coral;
-      float: left;
-    }
-  </style>
+  <body>
+    <div id="container">
+      <div id="animate"></div>
+    </div>
 
-</head>
+    <div id="caixa-info">
+      <div>Bolas Verdes</div>
+      <div>Pontos</div>
+      <div id="bolas-verdes">0</div>
+      <div id="pontos">0</div>
+    </div>
 
-<body>
+    <script>
+      let countPoints = 0;
 
+      document.getElementById("animate").style.left = 0 + "px";
+      document.getElementById("animate").style.top = 0 + "px";
 
-  <div id="container">
-    <div id="animate"></div>
-  </div>
-
-  <div id="caixa-info">
-    <div>Bolas Verdes</div>
-    <div>Pontos</div>
-    <div id="bolas-verdes">0</div>
-    <div id="pontos">0</div>
-  </div>
-
-
-
-  <script>
-    document.getElementById("animate").style.left = 0 + 'px';
-    document.getElementById("animate").style.top = 0 + 'px';
-
-    document.addEventListener("keydown", function (event) {
-      var caixa = document.getElementById('container');
-      var elem = document.getElementById("animate");
-      var tecla = event.keyCode;
-      event.preventDefault();
-
-      //37-Esquerda 38-Cima 39-Direita 40-Baixo    
-      switch (tecla) {
-        case 37:
-          elem.style.left = parseInt(elem.style.left) - 5 + "px";
-          break;
-
-        case 39:
-          elem.style.left = parseInt(elem.style.left) + 5 + "px";
-          break;
-
-        case 38:
-          elem.style.top = parseInt(elem.style.top) - 5 + "px";
-          break;
-
-        case 40:
-          elem.style.top = parseInt(elem.style.top) + 5 + "px";
-          break;
-      }  
-
-    });
-
-
-    window.addEventListener("load", function (event) {
-
-      setInterval(function () {
-
+      document.addEventListener("keydown", function (event) {
+        var caixa = document.getElementById("container");
         var elem = document.getElementById("animate");
-        var caixa = document.getElementById('container');
-        var x = Math.floor(Math.random() * 370 / 5) * 5 + 5;;
-        var y = Math.floor(Math.random() * 370 / 5) * 5 + 5;;
+        var tecla = event.keyCode;
+        event.preventDefault();
 
-        var div = document.createElement("div");
-        var node = document.createTextNode("");
+        //37-Esquerda 38-Cima 39-Direita 40-Baixo
+        switch (tecla) {
+          case 37:
+            elem.style.left = parseInt(elem.style.left) - 5 + "px";
+            break;
 
-        var a = document.createAttribute("class");
-        a.value = "bola";
+          case 39:
+            elem.style.left = parseInt(elem.style.left) + 5 + "px";
+            break;
 
-        div.style.left = x + 'px';
-        div.style.top = y + 'px';
+          case 38:
+            elem.style.top = parseInt(elem.style.top) - 5 + "px";
+            break;
 
-        div.setAttributeNode(a);
-        div.appendChild(node);
+          case 40:
+            elem.style.top = parseInt(elem.style.top) + 5 + "px";
+            break;
+        }
 
-        caixa.appendChild(div);
+        const redBall = document.getElementById("animate");
+        const elementInContainer = document.getElementById("container");
+        const children = document.getElementById("container").children;
 
-      }, 3000);
+        for (let ball = 1; ball < children.length; ball++) {
+          if (redBall.style.cssText === children[ball].style.cssText) {
+            elementInContainer.removeChild(children[ball]);
 
-    });
+            countPoints++;
 
-  </script>
+            document.getElementById("bolas-verdes").innerHTML =
+              children.length - 1;
 
-</body>
+            document.getElementById("pontos").innerHTML = countPoints;
 
+            // redBall.style.background = "DarkOrange";
+          }
+        }
+      });
+
+      window.addEventListener("load", function (event) {
+        setInterval(function () {
+          const elements = document.getElementById("container").children.length;
+
+          document.getElementById("bolas-verdes").innerHTML = elements;
+
+          var elem = document.getElementById("animate");
+          var caixa = document.getElementById("container");
+          var x = Math.floor((Math.random() * 370) / 5) * 5 + 5;
+          var y = Math.floor((Math.random() * 370) / 5) * 5 + 5;
+
+          var div = document.createElement("div");
+          var node = document.createTextNode("");
+
+          var a = document.createAttribute("class");
+          a.value = "bola";
+
+          div.style.left = x + "px";
+          div.style.top = y + "px";
+
+          div.setAttributeNode(a);
+          div.appendChild(node);
+
+          caixa.appendChild(div);
+        }, 3000);
+      });
+    </script>
+  </body>
 </html>
